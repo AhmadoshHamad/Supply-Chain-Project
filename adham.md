@@ -7,7 +7,6 @@
 - path: Array of locations representing the route.
 - estimatedTime: Estimated time to complete the route.
 - distance: Total distance of the route.
-- expectedDelay : Estimated delay caused by traffic conditions (in minutes).
 ### Relationships:
 
 - Delivery: Each Route is associated with one Delivery.
@@ -22,6 +21,8 @@
 - distance: Distance covered by this subroute.
 - estimatedTime: Estimated time to cover this subroute.
 - trafficConditions : ( Light, Moderate, Heavy).
+- expectedDelay : Estimated delay caused by traffic conditions (in minutes).
+
 ### Relationships:
 
 - Route: Each Subroute is associated with one Route.
