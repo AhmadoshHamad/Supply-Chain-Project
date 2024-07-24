@@ -11,5 +11,3 @@
 - client feedback
 - tracking orders subsystem
 - Payment Gateway
-- حشغةثىف 
-- بهىش
