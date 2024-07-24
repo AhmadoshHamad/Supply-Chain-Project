@@ -1,6 +1,8 @@
+# Entities
+ 
 1. Supplier 
 2. Consumer 
-3.Manager
+3. Manager
 4. Order 
 5. Order Line 
 6. Warehouse 
