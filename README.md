@@ -6,6 +6,6 @@ Build a supply chain project apis , with documentation &amp; implememt last mile
 - [X] make a Gantt Chart
 - [X] write requirements
 - [X] write entities
-- [ ] analyze requirements
+- [ ] analyze requirements and entities 
 - [ ] make an ERD  
   
