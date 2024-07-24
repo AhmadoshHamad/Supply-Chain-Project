@@ -7,5 +7,5 @@ Build a supply chain project apis , with documentation &amp; implememt last mile
 - [X] write requirements
 - [X] write entities
 - [ ] analyze requirements
-- [ ] make an ERD  kk
+- [ ] make an ERD  
   
