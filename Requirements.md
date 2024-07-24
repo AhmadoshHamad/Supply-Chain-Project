@@ -1,5 +1,5 @@
 # Requirements (Rules)
-- Customer Placing an 
+- Customer Placing an Order
 - Picking algorithm 
 - Picking Orders
 - dropping orders in warehouse
