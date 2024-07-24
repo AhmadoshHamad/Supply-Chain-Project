@@ -10,8 +10,6 @@
 8. Delivery 
 9. Loader 
 10. Veichles
- 
-12. Subroute 
 13. Transaction 
 14. Tracking 
 15. Route
