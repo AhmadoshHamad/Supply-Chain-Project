@@ -9,5 +9,7 @@
 -  Delivery Routing algorithm
 - confirmation of client
 - client feedback
-- tracking orders subsystem  
-
+- tracking orders subsystem
+- Payment Gateway
+- حشغةثىف 
+- بهىش
