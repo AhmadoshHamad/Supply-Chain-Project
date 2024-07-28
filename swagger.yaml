@@ -1,0 +1,1635 @@
+openapi: 3.0.0
+info:
+  title: Last Mile Delivery API
+  description: API for managing last mile delivery
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+
+
+
+tags:
+  - name: Users
+  - name: Employee
+  - name: Consumer
+  - name: Suppliers
+  - name: Deliveries
+  - name: Pickers
+  - name: Loaders
+  - name: Managers
+  - name: Orders
+  - name: Products
+  - name: Vehicles
+  - name: Warehouses
+  - name: Routes
+  - name: Subroutes
+  - name: OrderLines
+  - name: Transactions
+  - name: Refunds
+  - name: Feedback
+  - name: Tracking
+
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+        - Users
+      summary: Update a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+        - Users
+      summary: Delete a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: User deleted successfully
+          
+
+  /customers:
+    get:
+      tags:
+        - Consumer
+      summary: Get all customers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consumer'
+    post:
+      tags:
+        - Consumer
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Consumer'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+  /customers/{id}:
+    get:
+      tags:
+        - Consumer
+      summary: Get a customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+    put:
+      tags:
+        - Consumer
+      summary: Update a customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Consumer'
+      responses:
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+    delete:
+      tags:
+        - Consumer
+      summary: Delete a customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted successfully
+
+  /suppliers:
+    get:
+      tags:
+        - Suppliers
+      summary: Get all suppliers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+    post:
+      tags:
+        - Suppliers
+      summary: Create a new supplier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '201':
+          description: Supplier created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+  /suppliers/{id}:
+    get:
+      tags:
+        - Suppliers
+      summary: Get a supplier by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+    put:
+      tags:
+        - Suppliers
+      summary: Update a supplier by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+      responses:
+        '200':
+          description: Supplier updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+    delete:
+      tags:
+        - Suppliers
+      summary: Delete a supplier by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Supplier deleted successfully
+
+  /managers:
+    get:
+      tags:
+        - Managers
+      summary: Get all managers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Manager'
+    post:
+      tags:
+        - Managers
+      summary: Create a new manager
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+      responses:
+        '201':
+          description: Manager created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+  /managers/{id}:
+    get:
+      tags:
+        - Managers
+      summary: Get a manager by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+    put:
+      tags:
+        - Managers
+      summary: Update a manager by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+      responses:
+        '200':
+          description: Manager updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+    delete:
+      tags:
+        - Managers
+      summary: Delete a manager by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Manager deleted successfully
+
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: Get all orders
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter orders by status
+        - name: consumerId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter orders by consumer ID
+        - name: orderDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Filter orders by order date
+        - name: vehicleId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Filter orders by vehicle Id
+        - name: routeId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Filter orders by route ID
+        - name: loaderId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Filter orders by loader Id
+        - name: supplierId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Filter orders by Supplier Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get an order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    put:
+      tags:
+        - Orders
+      summary: Update an order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    delete:
+      tags:
+        - Orders
+      summary: Delete an order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Order deleted successfully
+
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get a product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    put:
+      tags:
+        - Products
+      summary: Update a product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      tags:
+        - Products
+      summary: Delete a product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Product deleted successfully
+
+  /deliveries:
+    get:
+      tags:
+        - Deliveries
+      summary: Get all deliveries
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Delivery'
+    post:
+      tags:
+        - Deliveries
+      summary: Create a new delivery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+      responses:
+        '201':
+          description: Delivery created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+  /deliveries/{id}:
+    get:
+      tags:
+        - Deliveries
+      summary: Get a delivery by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+    put:
+      tags:
+        - Deliveries
+      summary: Update a delivery by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+      responses:
+        '200':
+          description: Delivery updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+    delete:
+      tags:
+        - Deliveries
+      summary: Delete a delivery by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Delivery deleted successfully
+
+  /pickers:
+    get:
+      tags:
+        - Pickers
+      summary: Get all pickers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Picker'
+    post:
+      tags:
+        - Pickers
+      summary: Create a new picker
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Picker'
+      responses:
+        '201':
+          description: Picker created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picker'
+  /pickers/{id}:
+    get:
+      tags:
+        - Pickers
+      summary: Get a picker by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picker'
+    put:
+      tags:
+        - Pickers
+      summary: Update a picker by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Picker'
+      responses:
+        '200':
+          description: Picker updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Picker'
+    delete:
+      tags:
+        - Pickers
+      summary: Delete a picker by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Picker deleted successfully
+
+  /loaders:
+    get:
+      tags:
+        - Loaders
+      summary: Get all loaders
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loader'
+    post:
+      tags:
+        - Loaders
+      summary: Create a new loader
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Loader'
+      responses:
+        '201':
+          description: Loader created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loader'
+  /loaders/{id}:
+    get:
+      tags:
+        - Loaders
+      summary: Get a loader by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loader'
+    put:
+      tags:
+        - Loaders
+      summary: Update a loader by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Loader'
+      responses:
+        '200':
+          description: Loader updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loader'
+    delete:
+      tags:
+        - Loaders
+      summary: Delete a loader by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Loader deleted successfully
+
+  /vehicles:
+    get:
+      tags:
+        - Vehicles
+      summary: Get all vehicles
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+    post:
+      tags:
+        - Vehicles
+      summary: Create a new vehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehicle created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+  /vehicles/{id}:
+    get:
+      tags:
+        - Vehicles
+      summary: Get a vehicle by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+    put:
+      tags:
+        - Vehicles
+      summary: Update a vehicle by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '200':
+          description: Vehicle updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+    delete:
+      tags:
+        - Vehicles
+      summary: Delete a vehicle by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Vehicle deleted successfully
+
+  /warehouses:
+    get:
+      tags:
+        - Warehouses
+      summary: Get all warehouses
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Warehouse'
+    post:
+      tags:
+        - Warehouses
+      summary: Create a new warehouse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+      responses:
+        '201':
+          description: Warehouse created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+  /warehouses/{id}:
+    get:
+      tags:
+        - Warehouses
+      summary: Get a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+    put:
+      tags:
+        - Warehouses
+      summary: Update a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Warehouse'
+      responses:
+        '200':
+          description: Warehouse updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Warehouse'
+    delete:
+      tags:
+        - Warehouses
+      summary: Delete a warehouse by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Warehouse deleted successfully
+
+  /routes:
+    get:
+      tags:
+        - Routes
+      summary: Get all routes
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Route'
+    post:
+      tags:
+        - Routes
+      summary: Create a new route
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '201':
+          description: Route created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+  /routes/{id}:
+    get:
+      tags:
+        - Routes
+      summary: Get a route by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+    put:
+      tags:
+        - Routes
+      summary: Update a route by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '200':
+          description: Route updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+    delete:
+      tags:
+        - Routes
+      summary: Delete a route by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Route deleted successfully
+
+  /subroutes:
+    get:
+      tags:
+        - Subroutes
+      summary: Get all subroutes
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subroute'
+    post:
+      tags:
+        - Subroutes
+      summary: Create a new subroute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subroute'
+      responses:
+        '201':
+          description: Subroute created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subroute'
+  /subroutes/{id}:
+    get:
+      tags:
+        - Subroutes
+      summary: Get a subroute by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subroute'
+    put:
+      tags:
+        - Subroutes
+      summary: Update a subroute by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subroute'
+      responses:
+        '200':
+          description: Subroute updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subroute'
+    delete:
+      tags:
+        - Subroutes
+      summary: Delete a subroute by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Subroute deleted successfully
+
+  /order-lines:
+    get:
+      tags:
+        - OrderLines
+      summary: Get all order lines
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderLine'
+    post:
+      tags:
+        - OrderLines
+      summary: Create a new order line
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderLine'
+      responses:
+        '201':
+          description: Order line created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderLine'
+  /order-lines/{id}:
+    get:
+      tags:
+        - OrderLines
+      summary: Get an order line by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderLine'
+    put:
+      tags:
+        - OrderLines
+      summary: Update an order line by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderLine'
+      responses:
+        '200':
+          description: Order line updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderLine'
+    delete:
+      tags:
+        - OrderLines
+      summary: Delete an order line by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Order line deleted successfully
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/authorize
+          tokenUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+      required:
+        - name
+        - email
+      example:
+        id: 1
+        name: "Adham Turki"
+        email: "adhamturki321@gmail.com"
+        phone: "+970-597936306"
+        address: "Ramllah-AbuQash"
+        dateOfBirth: "2003-04-25"
+
+    Supplier:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            contactInfo:
+              type: string
+          required:
+            - contactInfo
+          example:
+            id: 1
+            name: "Ahmad Hamad"
+            email: "ahmadhamad@gmail.com"
+            phone: "+970-597936306"
+            address: "ALBireh"
+            dateOfBirth: "2003-04-25"
+            contactInfo: "ahmadhamad@gmail.com"
+
+    Consumer:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            loyaltyPoints:
+              type: integer
+          example:
+            id: 1
+            name: "Noor Hamayel"
+            email: "noor123@gmail.com"
+            phone: "+9729732572"
+            address: "Nablus"
+            dateOfBirth: "2003-04-25"
+            loyaltyPoints: 100
+
+    Manager:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            department:
+              type: string
+          required:
+            - department
+          example:
+            id: 1
+            name: "Munawwar Qamar"
+            email: "munawwarqamar@gmail.com"
+            phone: "+970-597936306"
+            address: "Ramllah-AbuQash"
+            dateOfBirth: "2003-04-25"
+            department: "UI/UX department"
+    Employee:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            salary:
+              type: number
+              format: float
+            warehouseId:
+              type: integer
+            availability:
+              type: boolean
+            productivity:
+              type: string
+          required:
+            - salary
+            - warehouseId
+            - availability
+            - productivity
+          example:
+            id: 1
+            name: "nasser"
+            email: "nasser3123@gmail.com"
+            phone: "+970-597936306"
+            address: "Jenin"
+            dateOfBirth: "1999-05-15"
+            salary: 3500.00
+            warehouseId: 101
+            availability: true
+            productivity: "High"
+    Loader:
+      allOf:
+        - $ref: '#/components/schemas/Employee'
+        - type: object
+          properties:
+            loadingAbility:
+              type: string
+          required:
+            - loadingAbility
+          example:
+            id: 1
+            name: "Ahmed Abd"
+            email: "ahmedAbd432@gmail.com"
+            phone: "+970-597936306"
+            address: "Ramllah-Irsal"
+            dateOfBirth: "1992-07-19"
+            salary: 3200.00
+            warehouseId: 102
+            availability: true
+            productivity: "Medium"
+            loadingAbility: "Heavy"
+    Picker:
+      allOf:
+        - $ref: '#/components/schemas/Employee'
+        - type: object
+          properties:
+            orderPickedByDay:
+              type: integer
+          required:
+            - orderPickedByDay
+          example:
+            id: 1
+            name: "Qais Njoom"
+            email: "QaisN123@gmail.com"
+            phone: "+970-597936306"
+            address: "Ramllah-AbuQash"
+            dateOfBirth: "1993-03-11"
+            salary: 3100.00
+            warehouseId: 103
+            availability: true
+            productivity: "Medium"
+            orderPickedByDay: 150
+    Delivery:
+      allOf:
+        - $ref: '#/components/schemas/Employee'
+        - type: object
+          properties:
+            routeId:
+              type: integer
+          required:
+            - routeId
+          example:
+            id: 1
+            name: "Abdallah Ibraheem"
+            email: "AbdallahIbraheem22@gmail.com"
+            phone: "+970-597936306"
+            address: "Ramllah-Bitunia"
+            dateOfBirth: "1996-03-11"
+            salary: 3100.00
+            warehouseId: 103
+            availability: true
+            productivity: "Low"
+            routeId: 1
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        orderDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+        consumerId:
+          type: integer
+        orderLines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLine'
+      required:
+        - orderDate
+        - status
+        - consumerId
+      example:
+        id: 1
+        orderDate: "2024-04-27"
+        status: "Pending"
+        consumerId: 1
+        orderLines:
+          - id: 1
+            orderId: 1
+            productId: 1
+            quantity: 2
+          - id: 2
+            orderId: 1
+            productId: 2
+            quantity: 1
+
+    OrderLine:
+      type: object
+      properties:
+        id:
+          type: integer
+        orderId:
+          type: integer
+        productId:
+          type: integer
+        quantity:
+          type: integer
+      required:
+        - orderId
+        - productId
+        - quantity
+      example:
+        id: 1
+        orderId: 1
+        productId: 1
+        quantity: 2
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        supplierId:
+          type: integer
+      required:
+        - name
+        - price
+      example:
+        id: 1
+        name: "Medicine A"
+        description: "Pain relief medication"
+        price: 9.99
+        supplierId: 1
+
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+        licensePlate:
+          type: string
+        type:
+          type: string
+        capacity:
+          type: number
+          format: float
+      required:
+        - licensePlate
+        - type
+      example:
+        id: 1
+        licensePlate: "XYZ-1234"
+        type: "Van"
+        capacity: 1000.0
+
+    Warehouse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+      required:
+        - name
+        - location
+      example:
+        id: 1
+        name: "Main Warehouse"
+        location: "12 Surda, Ramallah City, Palestine"
+
+    Route:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        warehouseId:
+          type: integer
+        subroutes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subroute'
+      required:
+        - name
+        - warehouseId
+      example:
+        id: 1
+        name: "Route A"
+        warehouseId: 1
+        subroutes:
+          - id: 1
+            name: "Subroute A1"
+            routeId: 1
+          - id: 2
+            name: "Subroute A2"
+            routeId: 1
+
+    Subroute:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        routeId:
+          type: integer
+      required:
+        - name
+        - routeId
+      example:
+        id: 1
+        name: "Subroute A1"
+        routeId: 1
+security:
+  - OAuth2:
+      - read
+      - write
