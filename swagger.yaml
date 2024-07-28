@@ -1,16 +1,10 @@
-openapi: 3.0.0
-info:
-  title: Last Mile Delivery API
-  description: API for managing last mile delivery
-  version: 1.0.0
-servers:
-  # Added by API Auto Mocking Plugin
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/RAHIBNOOR7/test/1.0.0
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/MunawwarQamar/supplyChain/1.0.0
-  - url: http://localhost:8080/api
+
+
+
+
+
+
+  asdfhsdfmasdgfajkesfjSJFLKJsdkl
 
 
 
