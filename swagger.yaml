@@ -4,6 +4,12 @@ info:
   description: API for managing last mile delivery
   version: 1.0.0
 servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/RAHIBNOOR7/test/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MunawwarQamar/supplyChain/1.0.0
   - url: http://localhost:8080/api
 
 
@@ -28,6 +34,7 @@ tags:
   - name: Refunds
   - name: Feedback
   - name: Tracking
+  - name: Categories
 
 paths:
   /users:
@@ -380,54 +387,6 @@ paths:
       tags:
         - Orders
       summary: Get all orders
-      parameters:
-        - name: status
-          in: query
-          required: false
-          schema:
-            type: string
-          description: Filter orders by status
-        - name: consumerId
-          in: query
-          required: false
-          schema:
-            type: integer
-          description: Filter orders by consumer ID
-        - name: orderDate
-          in: query
-          required: false
-          schema:
-            type: string
-            format: date
-          description: Filter orders by order date
-        - name: vehicleId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: date
-          description: Filter orders by vehicle Id
-        - name: routeId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: date
-          description: Filter orders by route ID
-        - name: loaderId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: date
-          description: Filter orders by loader Id
-        - name: supplierId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: date
-          description: Filter orders by Supplier Id
       responses:
         '200':
           description: Successful response
@@ -1282,18 +1241,476 @@ paths:
       responses:
         '204':
           description: Order line deleted successfully
+  /tracking:
+    get:
+      tags:
+        - Tracking
+      summary: Retrieve all tracking records
+      responses:
+        '200':
+          description: A list of tracking records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tracking'
+    post:
+      tags:
+        - Tracking
+      summary: Create a new tracking record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tracking'
+      responses:
+        '201':
+          description: Tracking record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracking'
+  /tracking/{id}:
+    get:
+      tags:
+        - Tracking
+      summary: Get a tracking record by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tracking record retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracking'
+    put:
+      tags:
+        - Tracking
+      summary: Update a tracking record by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tracking'
+      responses:
+        '200':
+          description: Tracking record updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracking'
+    delete:
+      tags:
+        - Tracking
+      summary: Delete a tracking record by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Tracking record deleted successfully
+  /tracking/order/{orderId}:
+    get:
+      tags:
+        - Tracking
+      summary: Retrieve tracking information for a specific order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the order to retrieve tracking information for
+      responses:
+        '200':
+          description: Tracking information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tracking'
 
+  /refunds:
+    get:
+      tags:
+        - Refunds
+      summary: Retrieve a list of refunds
+      responses:
+        '200':
+          description: A list of refunds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refunds'
+    post:
+      tags:
+        - Refunds
+      summary: Create a new refund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refunds'
+      responses:
+        '201':
+          description: Refund created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refunds'
+
+  /refunds/{refundId}:
+    get:
+      tags:
+        - Refunds
+      summary: Retrieve a specific refund
+      parameters:
+        - name: refundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Refund details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refunds'
+        '404':
+          description: Refund not found
+    put:
+      tags:
+        - Refunds
+      summary: Update the status of a refund
+      parameters:
+        - name: refundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+              required:
+                - status
+              example:
+                status: "Completed"
+      responses:
+        '200':
+          description: Refund status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refunds'
+        '404':
+          description: Refund not found
+  /feedback:
+    get:
+      tags:
+        - Feedback
+      summary: Retrieve all feedback entries
+      responses:
+        '200':
+          description: A list of all feedback entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+    post:
+      tags:
+        - Feedback
+      summary: Create new feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '201':
+          description: Feedback created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+
+  /feedback/{feedbackId}:
+    get:
+      tags:
+        - Feedback
+      summary: Retrieve feedback by ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Feedback retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+    put:
+      tags:
+        - Feedback
+      summary: Update feedback by ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '200':
+          description: Feedback updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+    delete:
+      tags:
+        - Feedback
+      summary: Delete feedback by ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Feedback deleted successfully
+          
+          
+  /feedback/consumer/{consumerId}:
+    get:
+      tags:
+        - Feedback
+      summary: Retrieve all feedback for a specific consumer
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the consumer
+      responses:
+        '200':
+          description: List of feedback entries for the specified consumer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+                  
+  /transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Retrieve all transactions
+      responses:
+        '200':
+          description: A list of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+    post:
+      tags:
+        - Transactions
+      summary: Create a new transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '201':
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - Transactions
+      summary: Retrieve a transaction by ID
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+    put:
+      tags:
+        - Transactions
+      summary: Update a transaction by ID
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+      responses:
+        '200':
+          description: Transaction updated successfully
+    delete:
+      tags:
+        - Transactions
+      summary: Delete a transaction by ID
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Transaction deleted successfully
+    
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve all categories
+      responses:
+        '200':
+          description: List of all categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+    post:
+      tags:
+        - Categories
+      summary: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+
+  /categories/{categoryid}:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve a category by ID
+      parameters:
+        - name: categoryid
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Category retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+    put:
+      tags:
+        - Categories
+      summary: Update a category by ID
+      parameters:
+        - name: categoryid
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Category'
+    delete:
+      tags:
+        - Categories
+      summary: Delete a category by ID
+      parameters:
+        - name: categoryid
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Category deleted successfully
+          
+    
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/authorize
-          tokenUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/oauth/token
-          scopes:
-            read: Grants read access
-            write: Grants write access
   schemas:
     User:
       type: object
@@ -1629,7 +2046,150 @@ components:
         id: 1
         name: "Subroute A1"
         routeId: 1
-security:
-  - OAuth2:
-      - read
-      - write
+    
+    
+        
+    Tracking: 
+      type: object
+      properties:
+        TrackingID:
+          type: integer
+        OrderId:
+          type: integer
+        currentLocation:
+          type: string
+          maxLength: 255
+        Date:
+          type: string
+          format: date
+        Time:
+          type: string
+          format: time
+        trackingStatusUpdate:
+          type: string
+          maxLength: 100
+      required:
+        - TrackingID
+        - OrderId
+      example:
+        TrackingID: 101
+        OrderId: 201
+        currentLocation: "1234 Main St, Warehouse 5"
+        Date: "2024-05-20"
+        Time: "14:45"
+        trackingStatusUpdate: "Package has left the facility"
+        
+    Refunds:
+      type: object
+      properties:
+        refundId:
+          type: integer
+        transactionId:
+          type: integer
+        amount:
+          type: number
+          format: double
+        refundDate:
+          type: string
+          format: date
+        estimatedTime:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+      required:
+        - transactionId
+        - amount
+        - refundDate
+      example:
+        refundId: 101
+        transactionId: 202
+        amount: 150.00
+        refundDate: "2024-07-20"
+        estimatedTime: "3 days"
+        reason: "Product defect"
+        status: "Pending"
+    Feedback:
+      type: object
+      properties:
+        feedbackId:
+          type: integer
+        consumerId:
+          type: integer
+        orderId:
+          type: integer
+        rating:
+          type: number
+          format: double
+        feedbackDate:
+          type: string
+          format: date
+        comments:
+          type: string
+          maxLength: 255
+      required:
+        - consumerId
+        - orderId
+        - rating
+        - feedbackDate
+        - comments
+      example:
+        feedbackId: 1
+        consumerId: 101
+        orderId: 5001
+        rating: 4.5
+        feedbackDate: "2024-07-30"
+        comments: "Very prompt delivery and friendly service. Highly recommended!"
+        
+    Transaction:
+      type: object
+      properties:
+        TransactionID:
+          type: integer
+          description: Primary key identifier for the transaction.
+        OrderID:
+          type: integer
+          description: Foreign key linking to the Order.
+        FromUserID:
+          type: integer
+          description: Foreign key representing the user initiating the transaction.
+        ToUserID:
+          type: integer
+          description: Foreign key representing the user receiving the transaction.
+        PaymentMethodID:
+          type: integer
+          description: Identifier for the payment method used.
+        amount:
+          type: number
+          format: double
+          description: The monetary amount of the transaction.
+        currency:
+          type: string
+          description: The currency type of the amount (e.g., USD, EUR).
+        transactionType:
+          type: string
+          description: The type of transaction (e.g., payment, refund).
+      required:
+        - TransactionID
+        - OrderID
+        - FromUserID
+        - ToUserID
+        - PaymentMethodID
+        - amount
+        - currency
+        - transactionType
+        
+    Category:
+      type: object
+      properties:
+        categoryid:
+          type: integer
+          description: The unique identifier for the category.
+        name:
+          type: string
+          description: The name of the category.
+          maxLength: 50
+      required:
+        - categoryid
+        - name
