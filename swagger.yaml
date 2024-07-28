@@ -8,26 +8,7 @@ servers:
 
 
 
-tags:
-  - name: Users
-  - name: Employee
-  - name: Consumer
-  - name: Suppliers
-  - name: Deliveries
-  - name: Pickers
-  - name: Loaders
-  - name: Managers
-  - name: Orders
-  - name: Products
-  - name: Vehicles
-  - name: Warehouses
-  - name: Routes
-  - name: Subroutes
-  - name: OrderLines
-  - name: Transactions
-  - name: Refunds
-  - name: Feedback
-  - name: Tracking
+
 
 paths:
   /users:
