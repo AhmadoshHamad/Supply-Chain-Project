@@ -3,10 +3,10 @@
 
 
 ## Supply Chain ERD
-![alt text](SupplyChainERD.drawio.svg)
+![alt text](images/SupplyChainERD.drawio.svg)
 
 ## Critical Path Planning 
-![alt text](graph.drawio.png)
+![alt text](images/graph.drawio.png)
 
 ## Todo list:
 - [X] make a Gantt Chart
