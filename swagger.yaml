@@ -14,6 +14,7 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/MunawwarQamar/supplyChain/1.0.0
 
+
 tags:
   - name: users
   - name: employees
@@ -37,6 +38,8 @@ tags:
   - name: profiles
   - name: profiletypes
 
+
+
 paths:
   /users:
     get:
@@ -51,8 +54,9 @@ paths:
             type: string
           description: Filter users by address
       responses:
-        '200':
-          description: Successful response
+
+          '201':
+          description: Created
           content:
             application/json:
               schema:
