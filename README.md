@@ -1,6 +1,12 @@
 # Supply-Chain-Project
-Build a supply chain project apis , with documentation &amp; implememt last mile delivery
 
+
+
+## Supply Chain ERD
+![alt text](SupplyChainERD.drawio.svg)
+
+## Critical Path Planning 
+![alt text](graph.drawio.png)
 
 ## Todo list:
 - [X] make a Gantt Chart
@@ -9,4 +15,6 @@ Build a supply chain project apis , with documentation &amp; implememt last mile
 - [X] analyze requirements and entities
 - [X] make changes to the tasks graph and identify the critical route
 - [X] make an ERD  
-  
+- [X] Swagger Mastery
+- [X] Make Open API documentation 
+
