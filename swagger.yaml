@@ -55,7 +55,7 @@ paths:
           description: Filter users by address
       responses:
 
-          '201':
+          '202':
           description: Created
           content:
             application/json:
@@ -63,8 +63,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/users'
-        '400':
-          description: Bad Request
+
         '404':
           description: Not Found
         '500':
