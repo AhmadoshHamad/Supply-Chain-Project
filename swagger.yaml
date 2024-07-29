@@ -1,12 +1,42 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: Last Mile Delivery API
   description: API for managing last mile delivery
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MunawwarQamar/supplyChainn/1.0.0
+  - description: Local server
+    url: http://localhost:8080/api
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/RAHIBNOOR7/test/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MunawwarQamar/supplyChain/1.0.0
 
 
+tags:
+  - name: users
+  - name: employees
+  - name: consumers
+  - name: suppliers
+  - name: deliveries
+  - name: pickers
+  - name: loaders
+  - name: managers
+  - name: orders
+  - name: products
+  - name: vehicles
+  - name: warehouses
+  - name: routes
+  - name: orderlines
+  - name: transactions
+  - name: refunds
+  - name: feedbacks
+  - name: trackings
+  - name: categories
+  - name: profiles
+  - name: profiletypes
 
 
 
@@ -14,8 +44,15 @@ paths:
   /users:
     get:
       tags:
-        - Users
-      summary: Get all users
+        - users
+      summary: Retrieve all users
+      parameters:
+        - name: address
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter users by address
       responses:
 
           '201':
@@ -25,31 +62,42 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/users'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Users
+        - users
       summary: Create a new user
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/users'
       responses:
         '201':
           description: User created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  /users/{id}:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /users/{userId}:
     get:
       tags:
-        - Users
-      summary: Get a user by ID
+        - users
+      summary: Retrieve a user by ID
       parameters:
-        - name: id
+        - name: userId
           in: path
           required: true
           schema:
@@ -60,13 +108,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/users'
+        '404':
+          description: User not found
     put:
       tags:
-        - Users
+        - users
       summary: Update a user by ID
       parameters:
-        - name: id
+        - name: userId
           in: path
           required: true
           schema:
@@ -76,20 +126,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/users'
       responses:
         '200':
           description: User updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/users'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+        
     delete:
       tags:
-        - Users
+        - users
       summary: Delete a user by ID
       parameters:
-        - name: id
+        - name: userId
           in: path
           required: true
           schema:
@@ -97,13 +152,29 @@ paths:
       responses:
         '204':
           description: User deleted successfully
-          
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
-  /customers:
+  /employees:
     get:
       tags:
-        - Consumer
-      summary: Get all customers
+        - employees
+      summary: Retrieve all employees
+      parameters:
+        - name: warehouseId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter employees by warehouse id
+        - name: availability
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Filter employees by availability
       responses:
         '200':
           description: Successful response
@@ -112,31 +183,42 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Consumer'
+                  $ref: '#/components/schemas/employees'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Consumer
-      summary: Create a new customer
+        - employees
+      summary: Create a new employee
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Consumer'
+              $ref: '#/components/schemas/employees'
       responses:
         '201':
-          description: Customer created successfully
+          description: Employee created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Consumer'
-  /customers/{id}:
+                $ref: '#/components/schemas/employees'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /employees/{employeeId}:
     get:
       tags:
-        - Consumer
-      summary: Get a customer by ID
+        - employees
+      summary: Retrieve an employee by ID
       parameters:
-        - name: id
+        - name: employeeId
           in: path
           required: true
           schema:
@@ -147,13 +229,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Consumer'
+                $ref: '#/components/schemas/employees'
+        '404':
+          description: Employee not found
     put:
       tags:
-        - Consumer
-      summary: Update a customer by ID
+        - employees
+      summary: Update an employee by ID
       parameters:
-        - name: id
+        - name: employeeId
           in: path
           required: true
           schema:
@@ -163,33 +247,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Consumer'
+              $ref: '#/components/schemas/employees'
       responses:
         '200':
-          description: Customer updated successfully
+          description: Employee updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Consumer'
+                $ref: '#/components/schemas/employees'
     delete:
       tags:
-        - Consumer
-      summary: Delete a customer by ID
+        - employees
+      summary: Delete an employee by ID
       parameters:
-        - name: id
+        - name: employeeId
           in: path
           required: true
           schema:
             type: integer
       responses:
         '204':
-          description: Customer deleted successfully
+          description: Employee deleted successfully
 
-  /suppliers:
+  /consumers:
     get:
       tags:
-        - Suppliers
-      summary: Get all suppliers
+        - consumers
+      summary: Retrieve all consumers
+      parameters:
+        - name: loyaltyPoints
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter consumers by loyaltyPoints
       responses:
         '200':
           description: Successful response
@@ -198,31 +289,42 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Supplier'
+                  $ref: '#/components/schemas/consumers'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Suppliers
-      summary: Create a new supplier
+        - consumers
+      summary: Create a new consumer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Supplier'
+              $ref: '#/components/schemas/consumers'
       responses:
         '201':
-          description: Supplier created successfully
+          description: Consumer created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Supplier'
-  /suppliers/{id}:
+                $ref: '#/components/schemas/consumers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /consumers/{consumerId}:
     get:
       tags:
-        - Suppliers
-      summary: Get a supplier by ID
+        - consumers
+      summary: Retrieve a consumer by ID
       parameters:
-        - name: id
+        - name: consumerId
           in: path
           required: true
           schema:
@@ -233,13 +335,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Supplier'
+                $ref: '#/components/schemas/consumers'
+        '404':
+          description: Consumer not found
     put:
       tags:
-        - Suppliers
-      summary: Update a supplier by ID
+        - consumers
+      summary: Update a consumer by ID
       parameters:
-        - name: id
+        - name: consumerId
           in: path
           required: true
           schema:
@@ -249,20 +353,136 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Supplier'
+              $ref: '#/components/schemas/consumers'
+      responses:
+        '200':
+          description: Consumer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/consumers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - consumers
+      summary: Delete a consumer by ID
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Consumer deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /suppliers:
+    get:
+      tags:
+        - suppliers
+      summary: Retrieve all suppliers
+      parameters:
+        - name: productCatalog
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter suppliers by productCatalog
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/suppliers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - suppliers
+      summary: Create a new supplier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/suppliers'
+      responses:
+        '201':
+          description: Supplier created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suppliers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /suppliers/{supplierId}:
+    get:
+      tags:
+        - suppliers
+      summary: Retrieve a supplier by ID
+      parameters:
+        - name: supplierId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/suppliers'
+        '404':
+          description: Supplier not found
+    put:
+      tags:
+        - suppliers
+      summary: Update a supplier by ID
+      parameters:
+        - name: supplierId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/suppliers'
       responses:
         '200':
           description: Supplier updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Supplier'
+                $ref: '#/components/schemas/suppliers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Suppliers
+        - suppliers
       summary: Delete a supplier by ID
       parameters:
-        - name: id
+        - name: supplierId
           in: path
           required: true
           schema:
@@ -270,12 +490,29 @@ paths:
       responses:
         '204':
           description: Supplier deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
-  /managers:
+  /deliveries:
     get:
       tags:
-        - Managers
-      summary: Get all managers
+        - deliveries
+      summary: Retrieve all deliveries
+      parameters:
+        - name: availability
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Filter deliveries by availability
+        - name: warehouseId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter deliveries by warehouseId
       responses:
         '200':
           description: Successful response
@@ -284,31 +521,36 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Manager'
+                  $ref: '#/components/schemas/deliveries'
     post:
       tags:
-        - Managers
-      summary: Create a new manager
+        - deliveries
+      summary: Create a new delivery
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Manager'
+              $ref: '#/components/schemas/deliveries'
       responses:
         '201':
-          description: Manager created successfully
+          description: Delivery created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Manager'
-  /managers/{id}:
+                $ref: '#/components/schemas/deliveries'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /deliveries/{deliveryId}:
     get:
       tags:
-        - Managers
-      summary: Get a manager by ID
+        - deliveries
+      summary: Retrieve a delivery by ID
       parameters:
-        - name: id
+        - name: deliveryId
           in: path
           required: true
           schema:
@@ -319,13 +561,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Manager'
+                $ref: '#/components/schemas/deliveries'
+        '404':
+          description: Delivery not found
     put:
       tags:
-        - Managers
-      summary: Update a manager by ID
+        - deliveries
+      summary: Update a delivery by ID
       parameters:
-        - name: id
+        - name: deliveryId
           in: path
           required: true
           schema:
@@ -335,20 +579,368 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Manager'
+              $ref: '#/components/schemas/deliveries'
+      responses:
+        '200':
+          description: Delivery updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deliveries'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - deliveries
+      summary: Delete a delivery by ID
+      parameters:
+        - name: deliveryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Delivery deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /pickers:
+    get:
+      tags:
+        - pickers
+      summary: Retrieve all pickers
+      parameters:
+        - name: availability
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Filter pickers by availability
+        - name: warehouseId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter pickers by warehouseId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/pickers'
+    post:
+      tags:
+        - pickers
+      summary: Create a new picker
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pickers'
+      responses:
+        '201':
+          description: Picker created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /pickers/{pickerId}:
+    get:
+      tags:
+        - pickers
+      summary: Retrieve a picker by ID
+      parameters:
+        - name: pickerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Picker details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickers'
+        '404':
+          description: Picker not found
+    put:
+      tags:
+        - pickers
+      summary: Update a picker by ID
+      parameters:
+        - name: pickerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pickers'
+      responses:
+        '200':
+          description: Picker updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - pickers
+      summary: Delete a picker by ID
+      parameters:
+        - name: pickerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Picker deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /loaders:
+    get:
+      tags:
+        - loaders
+      summary: Retrieve all loaders
+      parameters:
+        - name: loadingAbility
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter loaders by productCatalog
+        - name: warehouseId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter loaders by warehouseId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/loaders'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - loaders
+      summary: Create a new loader
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loaders'
+      responses:
+        '201':
+          description: Loader created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loaders'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /loaders/{loaderId}:
+    get:
+      tags:
+        - loaders
+      summary: Retrieve a loader by ID
+      parameters:
+        - name: loaderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Loader details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loaders'
+        '404':
+          description: Loader not found
+    put:
+      tags:
+        - loaders
+      summary: Update a loader by ID
+      parameters:
+        - name: loaderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loaders'
+      responses:
+        '200':
+          description: Loader updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loaders'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - loaders
+      summary: Delete a loader by ID
+      parameters:
+        - name: loaderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Loader deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /managers:
+    get:
+      tags:
+        - managers
+      summary: Retrieve all managers
+      parameters:
+        - name: department
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter managers by department
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/managers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - managers
+      summary: Create a new manager
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/managers'
+      responses:
+        '201':
+          description: Manager created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /managers/{managerId}:
+    get:
+      tags:
+        - managers
+      summary: Retrieve a manager by ID
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/managers'
+        '404':
+          description: Manager not found
+    put:
+      tags:
+        - managers
+      summary: Update a manager by ID
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/managers'
       responses:
         '200':
           description: Manager updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Manager'
+                $ref: '#/components/schemas/managers'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Managers
+        - managers
       summary: Delete a manager by ID
       parameters:
-        - name: id
+        - name: managerId
           in: path
           required: true
           schema:
@@ -356,11 +948,15 @@ paths:
       responses:
         '204':
           description: Manager deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
   /orders:
     get:
       tags:
-        - Orders
+        - orders
       summary: Get all orders
       parameters:
         - name: status
@@ -369,6 +965,18 @@ paths:
           schema:
             type: string
           description: Filter orders by status
+        - name: vehicleId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter orders by status
+        - name: transactionId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter orders by transaction ID
         - name: consumerId
           in: query
           required: false
@@ -418,31 +1026,42 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/orders'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Orders
+        - orders
       summary: Create a new order
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/orders'
       responses:
         '201':
           description: Order created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-  /orders/{id}:
+                $ref: '#/components/schemas/orders'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /orders/{orderId}:
     get:
       tags:
-        - Orders
-      summary: Get an order by ID
+        - orders
+      summary: Retrieve an order by ID
       parameters:
-        - name: id
+        - name: orderId
           in: path
           required: true
           schema:
@@ -453,13 +1072,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/orders'
+        '404':
+          description: Order not found
     put:
       tags:
-        - Orders
+        - orders
       summary: Update an order by ID
       parameters:
-        - name: id
+        - name: orderId
           in: path
           required: true
           schema:
@@ -469,20 +1090,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/orders'
       responses:
         '200':
           description: Order updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/orders'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Orders
+        - orders
       summary: Delete an order by ID
       parameters:
-        - name: id
+        - name: orderId
           in: path
           required: true
           schema:
@@ -490,12 +1115,30 @@ paths:
       responses:
         '204':
           description: Order deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
   /products:
     get:
       tags:
-        - Products
-      summary: Get all products
+        - products
+      summary: Retrieve all products
+      parameters:
+        - name: unitPrice
+          in: query
+          required: false
+          schema:
+            type: number
+            format: double
+          description: Filter products by unitPrice
+        - name: categoryId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter products by categoryId
       responses:
         '200':
           description: Successful response
@@ -504,48 +1147,61 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: '#/components/schemas/products'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Products
+        - products
       summary: Create a new product
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/products'
       responses:
         '201':
           description: Product created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
-  /products/{id}:
+                $ref: '#/components/schemas/products'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /products/{productId}:
     get:
       tags:
-        - Products
-      summary: Get a product by ID
+        - products
+      summary: Retrieve a product by ID
       parameters:
-        - name: id
+        - name: productId
           in: path
           required: true
           schema:
             type: integer
       responses:
         '200':
-          description: Successful response
+          description: Product details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/products'
+        '404':
+          description: Product not found
     put:
       tags:
-        - Products
+        - products
       summary: Update a product by ID
       parameters:
-        - name: id
+        - name: productId
           in: path
           required: true
           schema:
@@ -555,20 +1211,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/products'
       responses:
         '200':
           description: Product updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/products'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Products
+        - products
       summary: Delete a product by ID
       parameters:
-        - name: id
+        - name: productId
           in: path
           required: true
           schema:
@@ -576,270 +1236,41 @@ paths:
       responses:
         '204':
           description: Product deleted successfully
-
-  /deliveries:
-    get:
-      tags:
-        - Deliveries
-      summary: Get all deliveries
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Delivery'
-    post:
-      tags:
-        - Deliveries
-      summary: Create a new delivery
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Delivery'
-      responses:
-        '201':
-          description: Delivery created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Delivery'
-  /deliveries/{id}:
-    get:
-      tags:
-        - Deliveries
-      summary: Get a delivery by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Delivery'
-    put:
-      tags:
-        - Deliveries
-      summary: Update a delivery by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Delivery'
-      responses:
-        '200':
-          description: Delivery updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Delivery'
-    delete:
-      tags:
-        - Deliveries
-      summary: Delete a delivery by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Delivery deleted successfully
-
-  /pickers:
-    get:
-      tags:
-        - Pickers
-      summary: Get all pickers
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Picker'
-    post:
-      tags:
-        - Pickers
-      summary: Create a new picker
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Picker'
-      responses:
-        '201':
-          description: Picker created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Picker'
-  /pickers/{id}:
-    get:
-      tags:
-        - Pickers
-      summary: Get a picker by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Picker'
-    put:
-      tags:
-        - Pickers
-      summary: Update a picker by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Picker'
-      responses:
-        '200':
-          description: Picker updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Picker'
-    delete:
-      tags:
-        - Pickers
-      summary: Delete a picker by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Picker deleted successfully
-
-  /loaders:
-    get:
-      tags:
-        - Loaders
-      summary: Get all loaders
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Loader'
-    post:
-      tags:
-        - Loaders
-      summary: Create a new loader
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Loader'
-      responses:
-        '201':
-          description: Loader created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Loader'
-  /loaders/{id}:
-    get:
-      tags:
-        - Loaders
-      summary: Get a loader by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Loader'
-    put:
-      tags:
-        - Loaders
-      summary: Update a loader by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Loader'
-      responses:
-        '200':
-          description: Loader updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Loader'
-    delete:
-      tags:
-        - Loaders
-      summary: Delete a loader by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Loader deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
   /vehicles:
     get:
       tags:
-        - Vehicles
-      summary: Get all vehicles
+        - vehicles
+      summary: Retrieve all vehicles
+      parameters:
+        - name: vehiclesType
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter vehicles by vehiclesType
+        - name: MaxWeightSpace
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter vehicles by MaxWeightSpace
+        - name: MaxLoadWeight
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter vehicles by MaxLoadWeight
+        - name: availabilityStatus
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter vehicles by availabilityStatus
       responses:
         '200':
           description: Successful response
@@ -848,48 +1279,59 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Vehicle'
+                  $ref: '#/components/schemas/vehicles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Vehicles
+        - vehicles
       summary: Create a new vehicle
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Vehicle'
+              $ref: '#/components/schemas/vehicles'
       responses:
         '201':
           description: Vehicle created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vehicle'
-  /vehicles/{id}:
+                $ref: '#/components/schemas/vehicles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /vehicles/{vehicleId}:
     get:
       tags:
-        - Vehicles
-      summary: Get a vehicle by ID
+        - vehicles
+      summary: Retrieve a vehicle by ID
       parameters:
-        - name: id
+        - name: vehicleId
           in: path
           required: true
           schema:
             type: integer
       responses:
         '200':
-          description: Successful response
+          description: Vehicle details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vehicle'
+                $ref: '#/components/schemas/vehicles'
+        '404':
+          description: Vehicle not found
     put:
       tags:
-        - Vehicles
+        - vehicles
       summary: Update a vehicle by ID
       parameters:
-        - name: id
+        - name: vehicleId
           in: path
           required: true
           schema:
@@ -899,20 +1341,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Vehicle'
+              $ref: '#/components/schemas/vehicles'
       responses:
         '200':
           description: Vehicle updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Vehicle'
+                $ref: '#/components/schemas/vehicles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Vehicles
+        - vehicles
       summary: Delete a vehicle by ID
       parameters:
-        - name: id
+        - name: vehicleId
           in: path
           required: true
           schema:
@@ -920,12 +1366,29 @@ paths:
       responses:
         '204':
           description: Vehicle deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
   /warehouses:
     get:
       tags:
-        - Warehouses
-      summary: Get all warehouses
+        - warehouses
+      summary: Retrieve all warehouses
+      parameters:
+        - name: capacity
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter warehouses by capacity
+        - name: numOfEmployees
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter warehouses by numOfEmployees
       responses:
         '200':
           description: Successful response
@@ -934,31 +1397,40 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Warehouse'
+                  $ref: '#/components/schemas/warehouses'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Warehouses
+        - warehouses
       summary: Create a new warehouse
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Warehouse'
+              $ref: '#/components/schemas/warehouses'
       responses:
         '201':
           description: Warehouse created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Warehouse'
-  /warehouses/{id}:
+                $ref: '#/components/schemas/warehouses'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /warehouses/{warehouseId}:
     get:
       tags:
-        - Warehouses
-      summary: Get a warehouse by ID
+        - warehouses
+      summary: Retrieve a warehouse by ID
       parameters:
-        - name: id
+        - name: warehouseId
           in: path
           required: true
           schema:
@@ -969,13 +1441,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Warehouse'
+                $ref: '#/components/schemas/warehouses'
+        '404':
+          description: Warehouse not found
     put:
       tags:
-        - Warehouses
+        - warehouses
       summary: Update a warehouse by ID
       parameters:
-        - name: id
+        - name: warehouseId
           in: path
           required: true
           schema:
@@ -985,20 +1459,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Warehouse'
+              $ref: '#/components/schemas/warehouses'
       responses:
         '200':
           description: Warehouse updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Warehouse'
+                $ref: '#/components/schemas/warehouses'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Warehouses
+        - warehouses
       summary: Delete a warehouse by ID
       parameters:
-        - name: id
+        - name: warehouseId
           in: path
           required: true
           schema:
@@ -1006,12 +1484,29 @@ paths:
       responses:
         '204':
           description: Warehouse deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
   /routes:
     get:
       tags:
-        - Routes
-      summary: Get all routes
+        - routes
+      summary: Retrieve all routes
+      parameters:
+        - name: trafficConditions
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter routes by trafficConditions
+        - name: deliveryId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter routes by deliveryId
       responses:
         '200':
           description: Successful response
@@ -1020,31 +1515,40 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Route'
+                  $ref: '#/components/schemas/routes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     post:
       tags:
-        - Routes
+        - routes
       summary: Create a new route
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Route'
+              $ref: '#/components/schemas/routes'
       responses:
         '201':
           description: Route created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Route'
-  /routes/{id}:
+                $ref: '#/components/schemas/routes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /routes/{routeId}:
     get:
       tags:
-        - Routes
-      summary: Get a route by ID
+        - routes
+      summary: Retrieve a route by ID
       parameters:
-        - name: id
+        - name: routeId
           in: path
           required: true
           schema:
@@ -1055,13 +1559,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Route'
+                $ref: '#/components/schemas/routes'
+        '404':
+          description: Route not found
     put:
       tags:
-        - Routes
+        - routes
       summary: Update a route by ID
       parameters:
-        - name: id
+        - name: routeId
           in: path
           required: true
           schema:
@@ -1071,20 +1577,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Route'
+              $ref: '#/components/schemas/routes'
       responses:
         '200':
           description: Route updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Route'
+                $ref: '#/components/schemas/routes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - Routes
+        - routes
       summary: Delete a route by ID
       parameters:
-        - name: id
+        - name: routeId
           in: path
           required: true
           schema:
@@ -1092,12 +1602,16 @@ paths:
       responses:
         '204':
           description: Route deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
-  /subroutes:
+  /orderlines:
     get:
       tags:
-        - Subroutes
-      summary: Get all subroutes
+        - orderlines
+      summary: Retrieve all order lines
       responses:
         '200':
           description: Successful response
@@ -1106,134 +1620,65 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Subroute'
-    post:
-      tags:
-        - Subroutes
-      summary: Create a new subroute
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Subroute'
-      responses:
-        '201':
-          description: Subroute created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subroute'
-  /subroutes/{id}:
-    get:
-      tags:
-        - Subroutes
-      summary: Get a subroute by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subroute'
-    put:
-      tags:
-        - Subroutes
-      summary: Update a subroute by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Subroute'
-      responses:
-        '200':
-          description: Subroute updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subroute'
-    delete:
-      tags:
-        - Subroutes
-      summary: Delete a subroute by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Subroute deleted successfully
+                  $ref: '#/components/schemas/orderlines'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
-  /order-lines:
+  /orderlines/{orderId}:
     get:
       tags:
-        - OrderLines
-      summary: Get all order lines
+        - orderlines
+      summary: Retrieve an order line by orderId
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: Successful response
+          description: Order line details
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrderLine'
+                $ref: '#/components/schemas/orderlines'
+        '404':
+          description: Order line not found
     post:
       tags:
-        - OrderLines
+        - orderlines
       summary: Create a new order line
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderLine'
+              $ref: '#/components/schemas/orderlines'
       responses:
         '201':
           description: Order line created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderLine'
-  /order-lines/{id}:
-    get:
-      tags:
-        - OrderLines
-      summary: Get an order line by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderLine'
+                $ref: '#/components/schemas/orderlines'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     put:
       tags:
-        - OrderLines
-      summary: Update an order line by ID
+        - orderlines
+      summary: Update an order line by orderId
       parameters:
-        - name: id
+        - name: orderId
           in: path
           required: true
           schema:
@@ -1243,20 +1688,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderLine'
+              $ref: '#/components/schemas/orderlines'
       responses:
         '200':
           description: Order line updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderLine'
+                $ref: '#/components/schemas/orderlines'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
     delete:
       tags:
-        - OrderLines
-      summary: Delete an order line by ID
+        - orderlines
+      summary: Delete an order line by orderId
       parameters:
-        - name: id
+        - name: orderId
           in: path
           required: true
           schema:
@@ -1264,20 +1713,849 @@ paths:
       responses:
         '204':
           description: Order line deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /trackings:
+    get:
+      tags:
+        - trackings
+      summary: Retrieve all tracking records
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/trackings'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - trackings
+      summary: Create a new tracking record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trackings'
+      responses:
+        '201':
+          description: Tracking record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trackings'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 
+  /trackings/{trackingId}:
+    get:
+      tags:
+        - trackings
+      summary: Get a tracking record by ID
+      parameters:
+        - name: trackingId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tracking record retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trackings'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - trackings
+      summary: Update a tracking record by ID
+      parameters:
+        - name: trackingId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trackings'
+      responses:
+        '200':
+          description: Tracking record updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trackings'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - trackings
+      summary: Delete a tracking record by ID
+      parameters:
+        - name: trackingId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Tracking record deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /trackings/orders/{orderId}:
+    get:
+      tags:
+        - trackings
+      summary: Retrieve tracking information for a specific order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the order to retrieve tracking information for
+      responses:
+        '200':
+          description: Tracking information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trackings'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /refunds:
+    get:
+      tags:
+        - refunds
+      summary: Retrieve a list of refunds
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/refunds'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - refunds
+      summary: Create a new refund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/refunds'
+      responses:
+        '201':
+          description: Refund created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refunds'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /refunds/{refundId}:
+    get:
+      tags:
+        - refunds
+      summary: Retrieve a specific refund
+      parameters:
+        - name: refundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Refund details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refunds'
+        '404':
+          description: Refund not found
+    put:
+      tags:
+        - refunds
+      summary: Update the status of a refund
+      parameters:
+        - name: refundId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+              required:
+                - status
+              example:
+                status: "Completed"
+      responses:
+        '200':
+          description: Refund status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refunds'
+        '404':
+          description: Refund not found
+  /feedbacks:
+    get:
+      tags:
+        - feedbacks
+      summary: Retrieve all feedbacks entries
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/feedbacks'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - feedbacks
+      summary: Create new feedbacks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbacks'
+      responses:
+        '201':
+          description: feedbacks created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/feedbacks'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /feedbacks/{feedbacksId}:
+    get:
+      tags:
+        - feedbacks
+      summary: Retrieve feedbacks by ID
+      parameters:
+        - name: feedbacksId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: feedbacks retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/feedbacks'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - feedbacks
+      summary: Update feedbacks by ID
+      parameters:
+        - name: feedbacksId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/feedbacks'
+      responses:
+        '200':
+          description: feedbacks updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/feedbacks'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - feedbacks
+      summary: Delete feedbacks by ID
+      parameters:
+        - name: feedbacksId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: feedbacks deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+          
+  /feedbacks/consumers/{consumerId}:
+    get:
+      tags:
+        - feedbacks
+      summary: Retrieve all feedbacks for a specific consumer
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the consumer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/feedbacks'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+                  
+  /transactions:
+    get:
+      tags:
+        - transactions
+      summary: Retrieve all transactions
+      parameters:
+        - name: fromUserId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: toUserId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: paymentMethod
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: amount
+          in: query
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: transactionType
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: transactionStatus
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - transactions
+      summary: Create a new transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactions'
+      responses:
+        '201':
+          description: Transaction created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - transactions
+      summary: Retrieve a transaction by ID
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /transactions/{orderId}:
+    get:
+      tags:
+        - transactions
+      summary: Retrieve a transaction by order ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - transactions
+      summary: Update a transaction by ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactions'
+      responses:
+        '200':
+          description: Transaction updated successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - transactions
+      summary: Delete a transaction by ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Transaction deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    
+  /categories:
+    get:
+      tags:
+        - categories
+      summary: Retrieve all categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/categories'
+    post:
+      tags:
+        - categories
+      summary: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categories'
+      responses:
+        '201':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categories'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /categories/{categoryId}:
+    get:
+      tags:
+        - categories
+      summary: Retrieve a category by ID
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Category retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categories'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - categories
+      summary: Update a category by ID
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categories'
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/categories'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - categories
+      summary: Delete a category by ID
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Category deleted successfully
+
+  /profiles:
+    get:
+      tags:
+        - profiles
+      summary: Retrieve all profiles
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/profiles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - profiles
+      summary: Create a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/profiles'
+      responses:
+        '201':
+          description: Profile created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /profiles/{profileId}:
+    get:
+      tags:
+        - profiles
+      summary: Retrieve a profile by ID
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - profiles
+      summary: Update a profile by ID
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/profiles'
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiles'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - profiles
+      summary: Delete a profile by ID
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Profile deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /profiletypes:
+    get:
+      tags:
+        - profiletypes
+      summary: Retrieve all profile types
+      responses:
+        '200':
+          description: A list of profile types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/profiletypes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - profiletypes
+      summary: Create a new profile type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/profiletypes'
+      responses:
+        '201':
+          description: Profile type created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiletypes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /profiletypes/{profileTypeId}:
+    get:
+      tags:
+        - profiletypes
+      summary: Retrieve a profile type by ID
+      parameters:
+        - name: profileTypeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Profile type retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiletypes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - profiletypes
+      summary: Update a profile type by ID
+      parameters:
+        - name: profileTypeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/profiletypes'
+      responses:
+        '200':
+          description: Profile type updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiletypes'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - profiletypes
+      summary: Delete a profile type by ID
+      parameters:
+        - name: profileTypeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Profile type deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
 components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/authorize
-          tokenUrl: https://dev-jqxp1z5v5iqlg6vk.us.auth0.com/oauth/token
-          scopes:
-            read: Grants read access
-            write: Grants write access
   schemas:
-    User:
+    users:
       type: object
       properties:
         id:
@@ -1293,9 +2571,14 @@ components:
         dateOfBirth:
           type: string
           format: date
+        bankId:
+          type: integer
+          
       required:
         - name
         - email
+        - bankId
+        
       example:
         id: 1
         name: "Adham Turki"
@@ -1303,16 +2586,18 @@ components:
         phone: "+970-597936306"
         address: "Ramllah-AbuQash"
         dateOfBirth: "2003-04-25"
+        bankId: 1433636
 
-    Supplier:
+    suppliers:
       allOf:
-        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/users'
         - type: object
           properties:
-            contactInfo:
-              type: string
-          required:
-            - contactInfo
+           productCatalog: 
+            type: string
+        - required:
+          - productCatalog
+
           example:
             id: 1
             name: "Ahmad Hamad"
@@ -1320,11 +2605,11 @@ components:
             phone: "+970-597936306"
             address: "ALBireh"
             dateOfBirth: "2003-04-25"
-            contactInfo: "ahmadhamad@gmail.com"
+            productCatalog: "Cleaning materials"
 
-    Consumer:
+    consumers:
       allOf:
-        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/users'
         - type: object
           properties:
             loyaltyPoints:
@@ -1338,15 +2623,24 @@ components:
             dateOfBirth: "2003-04-25"
             loyaltyPoints: 100
 
-    Manager:
+    managers:
       allOf:
-        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/users'
         - type: object
           properties:
             department:
               type: string
+            warehouseId:
+              type: integer
+            salary:
+              type: number
+              format: float
+              
           required:
             - department
+            - salary
+            - warehouseId
+
           example:
             id: 1
             name: "Munawwar Qamar"
@@ -1355,9 +2649,12 @@ components:
             address: "Ramllah-AbuQash"
             dateOfBirth: "2003-04-25"
             department: "UI/UX department"
-    Employee:
+            warehouseId: 101
+            salary: 20000
+
+    employees:
       allOf:
-        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/users'
         - type: object
           properties:
             salary:
@@ -1385,9 +2682,10 @@ components:
             warehouseId: 101
             availability: true
             productivity: "High"
-    Loader:
+
+    loaders:
       allOf:
-        - $ref: '#/components/schemas/Employee'
+        - $ref: '#/components/schemas/employees'
         - type: object
           properties:
             loadingAbility:
@@ -1406,9 +2704,10 @@ components:
             availability: true
             productivity: "Medium"
             loadingAbility: "Heavy"
-    Picker:
+
+    pickers:
       allOf:
-        - $ref: '#/components/schemas/Employee'
+        - $ref: '#/components/schemas/employees'
         - type: object
           properties:
             orderPickedByDay:
@@ -1427,15 +2726,11 @@ components:
             availability: true
             productivity: "Medium"
             orderPickedByDay: 150
-    Delivery:
+
+    deliveries:
       allOf:
-        - $ref: '#/components/schemas/Employee'
+        - $ref: '#/components/schemas/employees'
         - type: object
-          properties:
-            routeId:
-              type: integer
-          required:
-            - routeId
           example:
             id: 1
             name: "Abdallah Ibraheem"
@@ -1447,173 +2742,386 @@ components:
             warehouseId: 103
             availability: true
             productivity: "Low"
-            routeId: 1
 
-    Order:
+    orders:
       type: object
       properties:
-        id:
+        orderId:
+          type: integer
+        consumerId:
+          type: integer
+        supplierId:
+          type: integer
+        vehicleId:
+          type: integer
+        routeId:
+          type: integer
+        loaderId:
           type: integer
         orderDate:
           type: string
           format: date-time
-        status:
+        deliveryDate:
           type: string
-        consumerId:
-          type: integer
-        orderLines:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderLine'
+          format: date-time  
+        paymentStatus:
+          type: string 
+        totalPrice:
+          type: number
+          format: float
+            
       required:
-        - orderDate
-        - status
         - consumerId
+        - supplierId
+        - routeId
+        - vehicleId
+        - loaderId
+        - orderDate
+        - deliveryDate
+        - paymentStatus
+        - totalPrice
+        
       example:
-        id: 1
-        orderDate: "2024-04-27"
-        status: "Pending"
-        consumerId: 1
-        orderLines:
-          - id: 1
-            orderId: 1
-            productId: 1
-            quantity: 2
-          - id: 2
-            orderId: 1
-            productId: 2
-            quantity: 1
+        orderId: 1
+        consumerId: 2
+        supplierId: 3
+        vehicleId: 2
+        routeId: 4
+        loaderId: 4
+        orderDate: "27-4-2024"
+        deliveryDate: "30-4-2024"
+        paymentStatus: "Pending"
+        totalPrice: 300
 
-    OrderLine:
+    orderlines:
       type: object
       properties:
-        id:
-          type: integer
         orderId:
           type: integer
         productId:
           type: integer
         quantity:
           type: integer
+        price:
+          type: number
+          format: float
       required:
         - orderId
         - productId
         - quantity
+        - price
       example:
         id: 1
         orderId: 1
         productId: 1
         quantity: 2
+        price: 40
 
-    Product:
+    products:
       type: object
       properties:
-        id:
+        productId:
           type: integer
-        name:
+        productName:
           type: string
         description:
           type: string
-        price:
+        unitPrice:
           type: number
           format: float
-        supplierId:
+        quantity:
+          type: integer
+        categoryId:
           type: integer
       required:
-        - name
-        - price
+        - productName
+        - unitPrice
+        - quantity
+        - categoryId
       example:
-        id: 1
-        name: "Medicine A"
+        productId: 1
+        productName: "Medicine A"
         description: "Pain relief medication"
-        price: 9.99
-        supplierId: 1
+        unitPrice: 9.99
+        quantity: 4
+        categoryId: 1
+        
 
-    Vehicle:
+    vehicles:
       type: object
       properties:
-        id:
+        vehicleId:
           type: integer
         licensePlate:
           type: string
-        type:
+        vehiclesType:
           type: string
-        capacity:
-          type: number
-          format: float
+        MaxWeightSpace:
+          type: integer
+        MaxLoadWeight:
+          type: integer
+        availabilityStatus:
+          type: string
+          
       required:
         - licensePlate
-        - type
+        - vehiclesType
+        - MaxWeightSpace
+        - MaxLoadWeight
+        - availabilityStatus
+        
       example:
-        id: 1
+        vehicleId: 1
         licensePlate: "XYZ-1234"
-        type: "Van"
-        capacity: 1000.0
-
-    Warehouse:
+        vehiclesType: "Van"
+        MaxWeightSpace: 500
+        MaxLoadWeight: 300
+        availabilityStatus: "available"
+        
+    warehouses:
       type: object
       properties:
-        id:
+        warehouseId:
           type: integer
-        name:
+        warehousesName:
           type: string
         location:
           type: string
+        capacity:
+          type: string
+        numOfEmployees:
+          type: integer
       required:
-        - name
+        - warehousesName
         - location
+        - capacity
+        - numOfEmployees 
       example:
-        id: 1
-        name: "Main Warehouse"
-        location: "12 Surda, Ramallah City, Palestine"
-
-    Route:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        warehouseId:
-          type: integer
-        subroutes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Subroute'
-      required:
-        - name
-        - warehouseId
-      example:
-        id: 1
-        name: "Route A"
         warehouseId: 1
-        subroutes:
-          - id: 1
-            name: "Subroute A1"
-            routeId: 1
-          - id: 2
-            name: "Subroute A2"
-            routeId: 1
-
-    Subroute:
+        warehousesName: "Main Warehouse"
+        location: "12 Surda, Ramallah City, Palestine"
+        capacity: 1000
+        numOfEmployees: 50
+        
+    routes:
       type: object
       properties:
-        id:
-          type: integer
-        name:
-          type: string
         routeId:
           type: integer
+        deliveryId:
+          type: integer
+        source:
+          type: string
+        destination:
+          type: string
+        routeOrder:
+          type: string
+        estimatedTime:
+          type: string
+        distance:
+          type: number
+          format: float
+        trafficConditions:
+          type: string
+        expectedDelay:
+          type: string
       required:
-        - name
         - routeId
+        - deliveryId
+        - source
+        - destination
+        - routeOrder
+        - estimatedTime
+        - distance
+        - trafficConditions
+        - expectedDelay
       example:
-        id: 1
-        name: "Subroute A1"
         routeId: 1
-security:
-  - OAuth2:
-      - read
-      - write
+        deliveryId: 101
+        source: "Warehouse A"
+        destination: "Customer B"
+        routeOrder: "First"
+        estimatedTime: "2 hours"
+        distance: 15.5
+        trafficConditions: "Moderate"
+        expectedDelay: "30 minutes"
 
-n publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is availabl
+    trackings:
+      type: object
+      properties:
+        trackingId:
+          type: integer
+        orderId:
+          type: integer
+        currentLocation:
+          type: string
+        timeStamps:
+          type: string
+        trackingStatusUpdate:
+          type: string
+      required:
+        - trackingId
+        - orderId
+        - currentLocation
+        - timeStamps
+        - trackingStatusUpdate
+      example:
+        trackingId: 101
+        orderId: 201
+        currentLocation: "1234 Main St, Warehouse 5"
+        timeStamps: "2024-05-20 14:45"
+        trackingStatusUpdate: "In Transit"
+        
+    profiles:
+      type: object
+      properties:
+        profileId:
+          type: integer
+        userId:
+          type: integer
+        profileType:
+          type: integer
+      required:
+        - profileId
+        - userId
+        - profileType
+      example:
+        profileId: 1
+        userId: 101
+        profileType: 2
+
+    profiletypes:
+      type: object
+      properties:
+        profiletypeId:
+          type: integer
+        typeName:
+          type: string
+      required:
+        - profiletypeId
+        - typeName
+      example:
+        profiletypeId: 1
+        typeName: "Manager"
+    transactions:
+      type: object
+      properties:
+        transactionId:
+          type: integer
+        orderId:
+          type: integer
+        fromUserId:
+          type: integer
+        toUserId:
+          type: integer
+        paymentMethod:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        transactionType:
+          type: string
+        transactionStatus:
+          type: string
+      required:
+        - transactionId
+        - orderId
+        - fromUserId
+        - toUserId
+        - paymentMethod
+        - amount
+        - currency
+        - transactionType
+        - transactionStatus
+      example:
+        transactionId: 1001
+        orderId: 500
+        fromUserId: 101
+        toUserId: 102
+        paymentMethod: "credit_card"
+        amount: 150.00
+        currency: "USD"
+        transactionType: "Payment"
+        transactionStatus: "Completed"
+
+    refunds:
+      type: object
+      properties:
+        refundId:
+          type: integer
+        transactionId:
+          type: integer
+        amount:
+          type: number
+          format: double
+        refundDate:
+          type: string
+          format: date
+        estimatedTime:
+          type: string
+        reason:
+          type: string
+        refundStatus:
+          type: string
+      required:
+        - refundId
+        - transactionId
+        - amount
+        - refundDate
+        - reason
+        - refundStatus
+      example:
+        refundId: 2001
+        transactionId: 1001
+        amount: 50.00
+        refundDate: "2024-07-20"
+        estimatedTime: "5 days"
+        reason: "Product defect"
+        status: "Pending"
+
+    feedbacks:
+      type: object
+      properties:
+        feedbacksId:
+          type: integer
+        consumerId:
+          type: integer
+        orderId:
+          type: integer
+        rating:
+          type: number
+          format: double
+        timestamps:
+          type: string
+        comments:
+          type: string
+      required:
+        - feedbacksId
+        - consumerId
+        - orderId
+        - rating
+        - timestamps
+        - comments
+      example:
+        feedbacksId: 3001
+        consumerId: 201
+        orderId: 5001
+        rating: 4.5
+        timestamps: "2024-07-30 15:00"
+        comments: "Excellent service and quick delivery!"
+
+    categories:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+        categorieName:
+          type: string
+      required:
+        - categoryId
+        - categorieName
+      example:
+        categoryId: 1
+        categorieName: "Electronics"
