@@ -17,14 +17,7 @@ paths:
         - Users
       summary: Get all users
       responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+
           '201':
           description: Created
           content:
