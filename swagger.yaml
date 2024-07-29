@@ -55,8 +55,8 @@ paths:
           description: Filter users by address
       responses:
 
-          '202':
-          description: Created
+          '200':
+          description: Successful
           content:
             application/json:
               schema:
