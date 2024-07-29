@@ -1,5 +1,5 @@
 # Supply-Chain-Project
-
+This project represent complete suite of APIs documentation offers a comprehensive suite of RESTful endpoints aimed at automating and enhancing various aspects of the last mile delivery within the supply chain. From managing deliveries, tracking routes, handling user and employee interactions to overseeing warehouse operations.
 
 
 ## Supply Chain ERD
