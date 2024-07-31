@@ -13,5 +13,18 @@
       "productivity": "Medium",
       "loadingAbility": "Heavy"
     }
-  ]
+  ],
+  "transactions":[
+  {
+    "transactionId": 1001,
+    "orderId": 500,
+    "fromUserId": 101,
+    "toUserId": 102,
+    "paymentMethod": "credit_card",
+    "amount": 150,
+    "currency": "USD",
+    "transactionType": "Payment",
+    "transactionStatus": "Completed"
+  }
+]
 }
