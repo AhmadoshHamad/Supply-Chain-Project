@@ -1,14 +1,6 @@
 
 {
-  "users": {
-    "id": 1,
-    "name": "Adham Turki",
-    "email": "adhamturki321@gmail.com",
-    "phone": "+970-597936306",
-    "address": "Ramllah-AbuQash",
-    "dateOfBirth": "2003-04-25",
-    "bankId": 1433636
-  },
+ 
   "loaders": {
     "id": 1,
     "name": "Ahmed Abd",
@@ -21,34 +13,5 @@
     "availability": true,
     "productivity": "Medium",
     "loadingAbility": "Heavy"
-  },
-  "suppliers": {
-    "id": 1,
-    "name": "Ahmad Hamad",
-    "email": "ahmadhamad@gmail.com",
-    "phone": "+970-597936306",
-    "address": "ALBireh",
-    "dateOfBirth": "2003-04-25",
-    "productCatalog": "Cleaning materials"
-  },
-  "consumers": {
-    "id": 1,
-    "name": "Noor Hamayel",
-    "email": "noor123@gmail.com",
-    "phone": "+9729732572",
-    "address": "Nablus",
-    "dateOfBirth": "2003-04-25",
-    "loyaltyPoints": 100
-  },
-  "managers": {
-    "id": 1,
-    "name": "Munawwar Qamar",
-    "email": "munawwarqamar@gmail.com",
-    "phone": "+970-597936306",
-    "address": "Ramllah-AbuQash",
-    "dateOfBirth": "2003-04-25",
-    "department": "UI/UX department",
-    "warehouseId": 101,
-    "salary": 20000
   }
 }
