@@ -1,5 +1,5 @@
-
-
+{
+  
   "loaders": {
     "id": 1,
     "name": "Ahmed Abd",
@@ -13,4 +13,4 @@
     "productivity": "Medium",
     "loadingAbility": "Heavy"
   }
-
+}
