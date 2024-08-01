@@ -3,6 +3,14 @@
   "loaders": {
     "id": 1,
     "name": "Ahmed Abd",
-
+    "email": "ahmedAbd432@gmail.com",
+    "phone": "+970-597936306",
+    "address": "Ramllah-Irsal",
+    "dateOfBirth": "1992-07-19",
+    "salary": 3200.00,
+    "warehouseId": 102,
+    "availability": true,
+    "productivity": "Medium",
+    "loadingAbility": "Heavy"
   }
 }
